@@ -1,0 +1,33 @@
+version: '3.5'
+services:
+  minicloud:
+    container_name: minicloud
+    build: 
+      context: .
+      dockerfile: docker/dev.minicloud.Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - 8080:8080
+  db-minicloud:
+    container_name: db-minicloud
+    image: postgres:16.1
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_USER=root
+    expose:
+      - 5432
+  pgadmin:
+    container_name: pgadmin-minicloud
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "e@e.com"
+      PGADMIN_DEFAULT_PASSWORD: "root"
+    ports:
+      - "8888:80"
+    depends_on:
+      - db-minicloud
+    volumes:
+      - ./pgadmin:/var/lib/pgadmin
