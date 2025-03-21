@@ -19,6 +19,8 @@ services:
       - POSTGRES_USER=root
     expose:
       - 5432
+    # ports:
+    #   - 5432:5432
   pgadmin:
     container_name: pgadmin-minicloud
     image: dpage/pgadmin4
